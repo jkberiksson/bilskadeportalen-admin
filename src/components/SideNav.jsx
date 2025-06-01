@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { LuLayoutDashboard, LuLogOut, LuCar, LuKeySquare, LuSun, LuMoon } from 'react-icons/lu';
 import { useTheme } from '../contexts/ThemeContext';
 
@@ -10,7 +10,6 @@ export default function SideNav() {
     const [companyInfo, setCompanyInfo] = useState(null);
     const [claimTypes, setClaimTypes] = useState([]);
     const location = useLocation();
-    const navigate = useNavigate();
     const { isDarkMode, toggleDarkMode } = useTheme();
 
     useEffect(() => {
@@ -75,7 +74,6 @@ export default function SideNav() {
 
     const handleLogout = async () => {
         await logout();
-        navigate('/');
     };
 
     return (
