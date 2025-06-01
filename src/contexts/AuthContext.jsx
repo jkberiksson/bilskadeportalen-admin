@@ -47,24 +47,12 @@ export function AuthProvider({ children }) {
 
     const logout = async () => {
         try {
-            // Clear any remaining session data from localStorage first
-            const keys = Object.keys(localStorage);
-            keys.forEach((key) => {
-                if (key.startsWith('sb-')) {
-                    localStorage.removeItem(key);
-                }
-            });
-
-            // Clear session state before attempting signOut
+            const { error } = await supabase.auth.signOut({ scope: 'local' });
+            if (error) throw error;
             setSession(null);
-
-            // Try to sign out, but don't worry if it fails
-            await supabase.auth.signOut();
-
             navigate('/');
         } catch (error) {
-            // If we get here, we're already logged out, just navigate
-            navigate('/');
+            console.log(error);
         }
     };
 
