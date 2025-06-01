@@ -231,7 +231,7 @@ export default function KeysDetails() {
                             </div>
                             <div className='flex items-center gap-3 bg-[var(--bg-secondary)] p-4 rounded-lg'>
                                 <LuCheck className='w-5 h-5 text-[var(--text-secondary)]' />
-                                <p className='text-[var(--text-primary)]'>Moms: {claim.vat}</p>
+                                <p className='text-[var(--text-primary)]'>Momspliktig: {claim.vat}</p>
                             </div>
                         </div>
                     </div>
