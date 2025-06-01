@@ -12,6 +12,7 @@ import {
     LuCheck,
     LuChevronDown,
     LuSignature,
+    LuDownload,
     LuTrash2,
 } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
@@ -27,6 +28,7 @@ export default function KeysDetails() {
     const [signature, setSignature] = useState(null);
     const [showPDF, setShowPDF] = useState(false);
     const [logo, setLogo] = useState(null);
+    const [images, setImages] = useState([]);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
     const navigate = useNavigate();
@@ -45,11 +47,41 @@ export default function KeysDetails() {
         }
     };
 
+    const handleDownloadImage = async (image) => {
+        try {
+            // Get the signed URL from Supabase
+            const { data, error } = await supabase.storage.from('damage-images').createSignedUrl(`${id}/${image.name}`, 5);
+            if (error) throw error;
+
+            // Fetch the blob from the signed URL
+            const response = await fetch(data.signedUrl);
+            const blob = await response.blob();
+
+            // Create a temporary link element and trigger download
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = image.name;
+            document.body.appendChild(a);
+            a.click();
+
+            // Cleanup
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        } catch (err) {
+            setError('Kunde inte ladda ner bilden');
+        }
+    };
+
     const handleDeleteClaim = async () => {
         setIsDeleting(true);
         try {
             const { error: signatureError } = await supabase.storage.from('signatures').remove([`${id}/signature.png`]);
             if (signatureError) throw signatureError;
+
+            const imgsToDelete = images.map((img) => `${id}/${img.name}`);
+            const { error: imagesError } = await supabase.storage.from('damage-images').remove(imgsToDelete);
+            if (imagesError) throw imagesError;
 
             const { error } = await supabase.from('key_claims').delete().eq('id', id);
             if (error) throw error;
@@ -79,6 +111,17 @@ export default function KeysDetails() {
                     .single();
                 if (logoError) throw new Error('Något gick fel vid hämtning av logon');
 
+                const { data: imagesData, error: imagesError } = await supabase.storage.from('damage-images').list(id);
+                if (imagesError) throw new Error('Något gick fel vid hämtning av bilder');
+
+                const uploadedImages = [];
+                for (const img of imagesData) {
+                    const { data, error } = await supabase.storage.from('damage-images').createSignedUrl(`${id}/${img.name}`, 5);
+                    if (error) throw new Error('Något gick fel vid hämtning av bilder');
+                    uploadedImages.push({ name: img.name, url: data.signedUrl });
+                }
+
+                setImages(uploadedImages);
                 setSignature(signatureData.signedUrl);
                 setLogo(logoData.logo);
                 setClaim(data);
@@ -188,6 +231,28 @@ export default function KeysDetails() {
                                 <p className='text-[var(--text-primary)]'>{claim.description}</p>
                             </div>
                         </div>
+                    </div>
+
+                    {/* Images */}
+                    <div className='bg-[var(--bg-primary)] rounded-2xl p-6 shadow-sm border border-[var(--border-color)]'>
+                        <h2 className='text-lg font-semibold text-[var(--text-primary)] mb-6'>Bilder</h2>
+                        {images.length > 0 && (
+                            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                                {images.map((image) => (
+                                    <div key={image.name} className='relative bg-[var(--bg-secondary)] rounded-lg overflow-hidden'>
+                                        <div className='absolute top-2 right-2 z-10 flex gap-2'>
+                                            <button
+                                                onClick={() => handleDownloadImage(image)}
+                                                className='hidden lg:block cursor-pointer p-2 bg-[var(--accent-blue)] text-white rounded-lg hover:bg-[var(--accent-blue)]/90 transition-colors'>
+                                                <LuDownload className='w-4 h-4' />
+                                            </button>
+                                        </div>
+                                        <img src={image.url} alt={image.name} className='w-full h-[200px] object-contain p-2' />
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                        {images.length === 0 && <p className='text-sm text-[var(--text-secondary)]'>Inga bilder tillagda</p>}
                     </div>
                 </div>
 

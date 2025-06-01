@@ -12,6 +12,8 @@ export default function KeysPage() {
         status: '',
         registrationNumber: '',
         customer: '',
+        startDate: '',
+        endDate: '',
     });
     const { session } = useAuth();
     const location = useLocation();
@@ -45,7 +47,15 @@ export default function KeysPage() {
             const matchesCustomer =
                 !filters.customer || `${key.firstname} ${key.lastname}`.toLowerCase().includes(filters.customer.toLowerCase());
 
-            return matchesStatus && matchesRegNr && matchesCustomer;
+            // Date filtering
+            const keyDate = new Date(key.created_at);
+            const startDate = filters.startDate ? new Date(filters.startDate) : null;
+            const endDate = filters.endDate ? new Date(filters.endDate) : null;
+
+            const matchesStartDate = !startDate || keyDate >= startDate;
+            const matchesEndDate = !endDate || keyDate <= new Date(endDate.setHours(23, 59, 59, 999)); // Include the entire end date
+
+            return matchesStatus && matchesRegNr && matchesCustomer && matchesStartDate && matchesEndDate;
         });
 
         setFilteredKeys(filtered);
@@ -56,6 +66,16 @@ export default function KeysPage() {
             ...prev,
             [key]: value,
         }));
+    };
+
+    const handleClearFilters = () => {
+        setFilters({
+            status: '',
+            registrationNumber: '',
+            customer: '',
+            startDate: '',
+            endDate: '',
+        });
     };
 
     const fetchKeys = async () => {
@@ -86,10 +106,8 @@ export default function KeysPage() {
 
     if (loading) {
         return (
-            <div className='p-8'>
-                <div className='flex items-center justify-center h-64'>
-                    <div className='animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[var(--accent-blue)]'></div>
-                </div>
+            <div className='flex items-center justify-center h-64'>
+                <div className='animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[var(--accent-blue)]'></div>
             </div>
         );
     }
@@ -108,7 +126,7 @@ export default function KeysPage() {
         <div className='p-4 lg:p-8 space-y-8'>
             {/* Header */}
             <div className='flex items-center justify-between'>
-                <h1 className='text-2xl font-bold text-[var(--text-primary)]'>Nyckelbeställningar</h1>
+                <h1 className='text-2xl font-bold text-[var(--text-primary)]'>Nycklar</h1>
             </div>
 
             {/* Filters */}
@@ -146,72 +164,105 @@ export default function KeysPage() {
                             className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]'
                         />
                     </div>
+                    <div>
+                        <label className='text-sm font-medium text-[var(--text-secondary)] block mb-2'>Från datum</label>
+                        <input
+                            type='date'
+                            value={filters.startDate}
+                            onChange={(e) => handleFilterChange('startDate', e.target.value)}
+                            className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]'
+                        />
+                    </div>
+                    <div>
+                        <label className='text-sm font-medium text-[var(--text-secondary)] block mb-2'>Till datum</label>
+                        <input
+                            type='date'
+                            value={filters.endDate}
+                            onChange={(e) => handleFilterChange('endDate', e.target.value)}
+                            className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]'
+                        />
+                    </div>
+                    <div className='flex items-end'>
+                        <button
+                            onClick={handleClearFilters}
+                            className='cursor-pointer w-full bg-[var(--bg-secondary)] text-[var(--text-primary)] py-2 px-4 rounded-lg font-medium border border-[var(--border-color)] hover:bg-[var(--bg-secondary)]/80 transition-colors'>
+                            Rensa filter
+                        </button>
+                    </div>
                 </div>
             </div>
 
             {/* Table */}
-            <div className='bg-[var(--bg-primary)] rounded-2xl shadow-sm border border-[var(--border-color)] overflow-hidden'>
-                <div className='overflow-x-auto'>
-                    <table className='w-full'>
-                        <thead>
-                            <tr className='bg-[var(--bg-secondary)]'>
-                                <th className='px-6 py-3 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
-                                    Registreringsnummer
-                                </th>
-                                <th className='px-6 py-3 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
-                                    Kund
-                                </th>
-                                <th className='px-6 py-3 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
-                                    Status
-                                </th>
-                                <th className='px-6 py-3 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
-                                    Åtgärder
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody className='divide-y divide-[var(--border-color)]'>
-                            {filteredKeys.map((key) => (
-                                <tr key={key.id} className='hover:bg-[var(--bg-secondary)]/50 transition-colors'>
-                                    <td className='px-6 py-4 whitespace-nowrap text-sm text-[var(--text-primary)] uppercase'>
-                                        {key.registrationnumber}
-                                    </td>
-                                    <td className='px-6 py-4 whitespace-nowrap text-sm text-[var(--text-primary)]'>
-                                        {key.firstname} {key.lastname}
-                                    </td>
-                                    <td className='px-6 py-4 whitespace-nowrap'>
-                                        <span
-                                            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                                                key.status === 'Avslutad'
-                                                    ? 'bg-[var(--accent-green)]/10 text-[var(--accent-green)]'
-                                                    : key.status === 'Under behandling'
-                                                    ? 'bg-[var(--accent-yellow)]/10 text-[var(--accent-yellow)]'
-                                                    : 'bg-[var(--accent-red)]/10 text-[var(--accent-red)]'
-                                            }`}>
-                                            {key.status}
-                                        </span>
-                                    </td>
-                                    <td className='px-6 py-4 whitespace-nowrap text-sm text-[var(--text-primary)]'>
-                                        <Link
-                                            to={`/keys/${key.id}`}
-                                            className='text-[var(--accent-blue)] hover:text-[var(--accent-blue)]/80 transition-colors'>
-                                            Visa detaljer
-                                        </Link>
-                                    </td>
+            {filteredKeys.length > 0 && (
+                <div className='bg-[var(--bg-primary)] rounded-2xl shadow-sm border border-[var(--border-color)] overflow-hidden'>
+                    <div className='overflow-x-auto'>
+                        <table className='w-full'>
+                            <thead>
+                                <tr className='bg-[var(--bg-secondary)]'>
+                                    <th className='px-6 py-3 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
+                                        Registreringsnummer
+                                    </th>
+                                    <th className='px-6 py-3 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
+                                        Kund
+                                    </th>
+                                    <th className='px-6 py-3 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
+                                        Status
+                                    </th>
+                                    <th className='px-6 py-3 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
+                                        Datum
+                                    </th>
+                                    <th className='px-6 py-3 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
+                                        Åtgärder
+                                    </th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody className='divide-y divide-[var(--border-color)]'>
+                                {filteredKeys.map((key) => (
+                                    <tr key={key.id} className='hover:bg-[var(--bg-secondary)]/50 transition-colors'>
+                                        <td className='px-6 py-4 whitespace-nowrap text-sm text-[var(--text-primary)] uppercase'>
+                                            {key.registrationnumber}
+                                        </td>
+                                        <td className='px-6 py-4 whitespace-nowrap text-sm text-[var(--text-primary)]'>
+                                            {key.firstname} {key.lastname}
+                                        </td>
+                                        <td className='px-6 py-4 whitespace-nowrap'>
+                                            <span
+                                                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                                    key.status === 'Avslutad'
+                                                        ? 'bg-[var(--accent-green)]/10 text-[var(--accent-green)]'
+                                                        : key.status === 'Under behandling'
+                                                        ? 'bg-[var(--accent-yellow)]/10 text-[var(--accent-yellow)]'
+                                                        : 'bg-[var(--accent-red)]/10 text-[var(--accent-red)]'
+                                                }`}>
+                                                {key.status}
+                                            </span>
+                                        </td>
+                                        <td className='px-6 py-4 whitespace-nowrap text-sm text-[var(--text-primary)]'>
+                                            {new Date(key.created_at).toLocaleDateString('sv-SE')}
+                                        </td>
+                                        <td className='px-6 py-4 whitespace-nowrap text-sm text-[var(--text-primary)]'>
+                                            <Link
+                                                to={`/keys/${key.id}`}
+                                                className='text-[var(--accent-blue)] hover:text-[var(--accent-blue)]/80 transition-colors'>
+                                                Visa detaljer
+                                            </Link>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            )}
 
             {filteredKeys.length === 0 && (
                 <div className='text-center py-12'>
                     <div className='bg-[var(--bg-secondary)] rounded-lg p-8 max-w-md mx-auto'>
-                        <h3 className='text-lg font-medium text-[var(--text-primary)] mb-1'>Inga nyckelbeställningar hittades</h3>
+                        <h3 className='text-lg font-medium text-[var(--text-primary)] mb-1'>Inga nycklar hittades</h3>
                         <p className='text-[var(--text-secondary)]'>
                             {keys.length === 0
-                                ? 'Det finns inga nyckelbeställningar registrerade för ditt företag än.'
-                                : 'Inga nyckelbeställningar matchar dina sökkriterier.'}
+                                ? 'Det finns inga nycklar registrerade för ditt företag än.'
+                                : 'Inga nycklar matchar dina sökkriterier.'}
                         </p>
                     </div>
                 </div>
