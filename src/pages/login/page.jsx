@@ -12,7 +12,7 @@ export default function LoginPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-    const { session } = useAuth();
+    const { session, login } = useAuth();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -26,7 +26,7 @@ export default function LoginPage() {
         }
 
         try {
-            const { error } = await supabase.auth.signInWithPassword({ email, password });
+            const { error } = await login(email, password);
             if (error) throw error;
             navigate('/dashboard');
         } catch (error) {

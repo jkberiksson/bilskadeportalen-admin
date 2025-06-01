@@ -38,7 +38,17 @@ export function AuthProvider({ children }) {
         };
     }, []);
 
-    return <AuthContext.Provider value={{ session }}>{children}</AuthContext.Provider>;
+    const login = async (email, password) => {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+    };
+
+    const logout = async () => {
+        await supabase.auth.signOut();
+        setSession(null);
+    };
+
+    return <AuthContext.Provider value={{ session, logout, login }}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {

@@ -6,7 +6,7 @@ import { LuLayoutDashboard, LuLogOut, LuCar, LuKeySquare, LuSun, LuMoon } from '
 import { useTheme } from '../contexts/ThemeContext';
 
 export default function SideNav() {
-    const { session } = useAuth();
+    const { session, logout } = useAuth();
     const [companyInfo, setCompanyInfo] = useState(null);
     const [claimTypes, setClaimTypes] = useState([]);
     const location = useLocation();
@@ -74,7 +74,7 @@ export default function SideNav() {
     };
 
     const handleLogout = async () => {
-        await supabase.auth.signOut();
+        await logout();
         navigate('/');
     };
 
