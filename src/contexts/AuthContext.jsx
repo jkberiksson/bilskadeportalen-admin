@@ -10,7 +10,6 @@ export function AuthProvider({ children }) {
         if (session) {
             const verifyUserExists = async () => {
                 const { data, error } = await supabase.from('profiles').select('id').eq('id', session.user.id).single();
-                console.log(data, error);
                 if (!data || error) {
                     await supabase.auth.signOut();
                     setSession(null);
