@@ -116,7 +116,7 @@ export default function KeysDetails() {
 
                 const uploadedImages = [];
                 for (const img of imagesData) {
-                    const { data, error } = await supabase.storage.from('damage-images').createSignedUrl(`${id}/${img.name}`, 5);
+                    const { data, error } = await supabase.storage.from('damage-images').createSignedUrl(`${id}/${img.name}`, 3600);
                     if (error) throw new Error('Något gick fel vid hämtning av bilder');
                     uploadedImages.push({ name: img.name, url: data.signedUrl });
                 }
