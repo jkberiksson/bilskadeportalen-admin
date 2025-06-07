@@ -45,12 +45,20 @@ const styles = StyleSheet.create({
         gap: '4px',
         borderBottom: '1px solid #111827',
     },
-    logo: {
+    bottomContainer: {
         position: 'absolute',
         bottom: '20px',
         left: '50px',
+        width: '80%',
+    },
+    logo: {
         width: '150px',
         objectFit: 'contain',
+        marginBottom: '20px',
+    },
+    confirmation: {
+        fontSize: '8px',
+        fontWeight: 'bold',
     },
 });
 
@@ -139,7 +147,14 @@ const ClaimDocument = ({ claim, signature, title, logo }) => (
                     <Text style={styles.value}>{claim.signature}</Text>
                 </View>
             </View>
-            <Image style={styles.logo} src={`/images/${logo}.png`} />
+            <View style={styles.bottomContainer}>
+                <Image style={styles.logo} src={`/images/${logo}.png`} />
+                <Text style={styles.confirmation}>
+                    Härmed intygas riktigheten av ovanstående uppgifter samt att försäkringen omfattar glasruteskada och att premien var
+                    betald vid skadetillfället. Godar försäkringsbolaget inte skadan som försäkringsgrundande är fordonsägaren alltid
+                    betalningsskyldig.
+                </Text>
+            </View>
         </Page>
     </Document>
 );
