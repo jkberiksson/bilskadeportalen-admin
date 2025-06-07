@@ -156,26 +156,26 @@ export default function KeysDetails() {
     }
 
     return (
-        <div className='p-4 lg:p-8 space-y-8'>
+        <div className='space-y-4'>
             {/* Header */}
             <div className='flex items-center justify-between'>
                 <div className='flex items-center gap-2 lg:gap-4'>
                     <Link to='/keys' className='p-2 hover:bg-[var(--bg-secondary)] rounded-full transition-colors'>
-                        <LuArrowLeft className='w-6 h-6 text-[var(--text-secondary)]' />
+                        <LuArrowLeft className='w-5 h-5 text-[var(--text-secondary)]' />
                     </Link>
-                    <h1 className='text-xl lg:text-2xl font-bold text-[var(--text-primary)]'>Nyckelbeställning</h1>
+                    <h1 className='text-xl font-bold text-[var(--text-primary)]'>Nyckelbeställning</h1>
                 </div>
                 <div className='hidden lg:flex items-center gap-4'>
                     <button
                         onClick={() => setShowPDF(true)}
-                        className='cursor-pointer px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 bg-[var(--accent-blue)]/10 text-[var(--accent-blue)]'>
+                        className='cursor-pointer px-3 py-1.5 rounded-full text-sm font-medium flex items-center gap-2 bg-[var(--accent-blue)]/10 text-[var(--accent-blue)]'>
                         <LuFileText className='w-4 h-4' />
                         Visa PDF
                     </button>
                     <div className='relative'>
                         <button
                             onClick={() => setIsStatusOpen(!isStatusOpen)}
-                            className={`cursor-pointer px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 ${
+                            className={`cursor-pointer px-3 py-1.5 rounded-full text-sm font-medium flex items-center gap-2 ${
                                 claim.status === 'Avslutad'
                                     ? 'bg-[var(--accent-green)]/10 text-[var(--accent-green)]'
                                     : claim.status === 'Under behandling'
@@ -191,7 +191,7 @@ export default function KeysDetails() {
                                     <button
                                         key={status}
                                         onClick={() => handleStatusChange(status)}
-                                        className={`cursor-pointer w-full text-left px-4 py-2 text-sm hover:bg-[var(--bg-secondary)] ${
+                                        className={`cursor-pointer w-full text-left px-3 py-1.5 text-sm hover:bg-[var(--bg-secondary)] ${
                                             status === claim.status ? 'text-[var(--accent-blue)] font-medium' : 'text-[var(--text-primary)]'
                                         }`}>
                                         {status}
@@ -202,48 +202,48 @@ export default function KeysDetails() {
                     </div>
                     <button
                         onClick={() => setShowDeleteModal(true)}
-                        className='cursor-pointer px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 bg-[var(--accent-red)]/10 text-[var(--accent-red)]'>
+                        className='cursor-pointer px-3 py-1.5 rounded-full text-sm font-medium flex items-center gap-2 bg-[var(--accent-red)]/10 text-[var(--accent-red)]'>
                         <LuTrash2 className='w-4 h-4' />
                         Ta bort claim
                     </button>
                 </div>
             </div>
 
-            <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
+            <div className='grid grid-cols-1 lg:grid-cols-3 gap-4'>
                 {/* Main Information */}
-                <div className='lg:col-span-2 space-y-8'>
+                <div className='lg:col-span-2 space-y-4'>
                     {/* Damage Details */}
-                    <div className='bg-[var(--bg-primary)] rounded-2xl p-6 shadow-sm border border-[var(--border-color)]'>
-                        <h2 className='text-lg font-semibold text-[var(--text-primary)] mb-6'>Skadeinformation</h2>
-                        <div className='space-y-6'>
-                            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-                                <div className='bg-[var(--bg-secondary)] p-4 rounded-lg'>
-                                    <label className='text-sm font-medium text-[var(--text-secondary)] block mb-2'>Skadedatum</label>
-                                    <p className='text-[var(--text-primary)]'>{new Date(claim.date).toLocaleDateString('sv-SE')}</p>
+                    <div className='bg-[var(--bg-primary)] rounded-xl p-4 shadow-sm border border-[var(--border-color)]'>
+                        <h2 className='text-base font-semibold text-[var(--text-primary)] mb-4'>Skadeinformation</h2>
+                        <div className='space-y-4'>
+                            <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
+                                <div className='bg-[var(--bg-secondary)] p-3 rounded-lg'>
+                                    <label className='text-xs font-medium text-[var(--text-secondary)] block mb-1.5'>Skadedatum</label>
+                                    <p className='text-sm text-[var(--text-primary)]'>{new Date(claim.date).toLocaleDateString('sv-SE')}</p>
                                 </div>
-                                <div className='bg-[var(--bg-secondary)] p-4 rounded-lg'>
-                                    <label className='text-sm font-medium text-[var(--text-secondary)] block mb-2'>Mätarställning</label>
-                                    <p className='text-[var(--text-primary)]'>{claim.odometer} km</p>
+                                <div className='bg-[var(--bg-secondary)] p-3 rounded-lg'>
+                                    <label className='text-xs font-medium text-[var(--text-secondary)] block mb-1.5'>Mätarställning</label>
+                                    <p className='text-sm text-[var(--text-primary)]'>{claim.odometer} km</p>
                                 </div>
                             </div>
-                            <div className='bg-[var(--bg-secondary)] p-4 rounded-lg'>
-                                <label className='text-sm font-medium text-[var(--text-secondary)] block mb-2'>Beskrivning</label>
-                                <p className='text-[var(--text-primary)]'>{claim.description}</p>
+                            <div className='bg-[var(--bg-secondary)] p-3 rounded-lg'>
+                                <label className='text-xs font-medium text-[var(--text-secondary)] block mb-1.5'>Beskrivning</label>
+                                <p className='text-sm text-[var(--text-primary)]'>{claim.description}</p>
                             </div>
                         </div>
                     </div>
 
                     {/* Images */}
-                    <div className='bg-[var(--bg-primary)] rounded-2xl p-6 shadow-sm border border-[var(--border-color)]'>
-                        <h2 className='text-lg font-semibold text-[var(--text-primary)] mb-6'>Bilder</h2>
+                    <div className='bg-[var(--bg-primary)] rounded-xl p-4 shadow-sm border border-[var(--border-color)]'>
+                        <h2 className='text-base font-semibold text-[var(--text-primary)] mb-4'>Bilder</h2>
                         {images.length > 0 && (
-                            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                            <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
                                 {images.map((image) => (
                                     <div key={image.name} className='relative bg-[var(--bg-secondary)] rounded-lg overflow-hidden'>
                                         <div className='absolute top-2 right-2 z-10 flex gap-2'>
                                             <button
                                                 onClick={() => handleDownloadImage(image)}
-                                                className='hidden lg:block cursor-pointer p-2 bg-[var(--accent-blue)] text-white rounded-lg hover:bg-[var(--accent-blue)]/90 transition-colors'>
+                                                className='hidden lg:block cursor-pointer p-1.5 bg-[var(--accent-blue)] text-white rounded-lg hover:bg-[var(--accent-blue)]/90 transition-colors'>
                                                 <LuDownload className='w-4 h-4' />
                                             </button>
                                         </div>

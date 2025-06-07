@@ -123,21 +123,21 @@ export default function KeysPage() {
     }
 
     return (
-        <div className='p-4 lg:p-8 space-y-8'>
+        <div className='space-y-4'>
             {/* Header */}
             <div className='flex items-center justify-between'>
-                <h1 className='text-2xl font-bold text-[var(--text-primary)]'>Nycklar</h1>
+                <h1 className='text-xl font-bold text-[var(--text-primary)]'>Nycklar</h1>
             </div>
 
             {/* Filters */}
-            <div className='bg-[var(--bg-primary)] rounded-2xl p-6 shadow-sm border border-[var(--border-color)]'>
-                <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+            <div className='bg-[var(--bg-primary)] rounded-xl p-4 shadow-sm border border-[var(--border-color)]'>
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-3'>
                     <div>
-                        <label className='text-sm font-medium text-[var(--text-secondary)] block mb-2'>Status</label>
+                        <label className='text-xs font-medium text-[var(--text-secondary)] block mb-1.5'>Status</label>
                         <select
                             value={filters.status}
                             onChange={(e) => handleFilterChange('status', e.target.value)}
-                            className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]'>
+                            className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]'>
                             <option value=''>Alla</option>
                             <option value='Ej påbörjad'>Ej påbörjad</option>
                             <option value='Under behandling'>Under behandling</option>
@@ -145,47 +145,47 @@ export default function KeysPage() {
                         </select>
                     </div>
                     <div>
-                        <label className='text-sm font-medium text-[var(--text-secondary)] block mb-2'>Registreringsnummer</label>
+                        <label className='text-xs font-medium text-[var(--text-secondary)] block mb-1.5'>Registreringsnummer</label>
                         <input
                             type='text'
                             value={filters.registrationNumber}
                             onChange={(e) => handleFilterChange('registrationNumber', e.target.value)}
                             placeholder='ABC123'
-                            className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]'
+                            className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]'
                         />
                     </div>
                     <div>
-                        <label className='text-sm font-medium text-[var(--text-secondary)] block mb-2'>Kund</label>
+                        <label className='text-xs font-medium text-[var(--text-secondary)] block mb-1.5'>Kund</label>
                         <input
                             type='text'
                             value={filters.customer}
                             onChange={(e) => handleFilterChange('customer', e.target.value)}
                             placeholder='Sök efter kund...'
-                            className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]'
+                            className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]'
                         />
                     </div>
                     <div>
-                        <label className='text-sm font-medium text-[var(--text-secondary)] block mb-2'>Från datum</label>
+                        <label className='text-xs font-medium text-[var(--text-secondary)] block mb-1.5'>Från datum</label>
                         <input
                             type='date'
                             value={filters.startDate}
                             onChange={(e) => handleFilterChange('startDate', e.target.value)}
-                            className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]'
+                            className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]'
                         />
                     </div>
                     <div>
-                        <label className='text-sm font-medium text-[var(--text-secondary)] block mb-2'>Till datum</label>
+                        <label className='text-xs font-medium text-[var(--text-secondary)] block mb-1.5'>Till datum</label>
                         <input
                             type='date'
                             value={filters.endDate}
                             onChange={(e) => handleFilterChange('endDate', e.target.value)}
-                            className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]'
+                            className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]'
                         />
                     </div>
                     <div className='flex items-end'>
                         <button
                             onClick={handleClearFilters}
-                            className='cursor-pointer w-full bg-[var(--bg-secondary)] text-[var(--text-primary)] py-2 px-4 rounded-lg font-medium border border-[var(--border-color)] hover:bg-[var(--bg-secondary)]/80 transition-colors'>
+                            className='cursor-pointer w-full bg-[var(--bg-secondary)] text-[var(--text-primary)] py-1.5 px-4 rounded-lg text-sm font-medium border border-[var(--border-color)] hover:bg-[var(--bg-secondary)]/80 transition-colors'>
                             Rensa filter
                         </button>
                     </div>
@@ -194,24 +194,24 @@ export default function KeysPage() {
 
             {/* Table */}
             {filteredKeys.length > 0 && (
-                <div className='bg-[var(--bg-primary)] rounded-2xl shadow-sm border border-[var(--border-color)] overflow-hidden'>
+                <div className='bg-[var(--bg-primary)] rounded-xl shadow-sm border border-[var(--border-color)] overflow-hidden'>
                     <div className='overflow-x-auto'>
                         <table className='w-full'>
                             <thead>
                                 <tr className='bg-[var(--bg-secondary)]'>
-                                    <th className='px-6 py-3 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
+                                    <th className='px-4 py-2 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
                                         Registreringsnummer
                                     </th>
-                                    <th className='px-6 py-3 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
+                                    <th className='px-4 py-2 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
                                         Kund
                                     </th>
-                                    <th className='px-6 py-3 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
+                                    <th className='px-4 py-2 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
                                         Status
                                     </th>
-                                    <th className='px-6 py-3 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
+                                    <th className='px-4 py-2 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
                                         Datum
                                     </th>
-                                    <th className='px-6 py-3 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
+                                    <th className='px-4 py-2 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
                                         Åtgärder
                                     </th>
                                 </tr>
@@ -219,15 +219,15 @@ export default function KeysPage() {
                             <tbody className='divide-y divide-[var(--border-color)]'>
                                 {filteredKeys.map((key) => (
                                     <tr key={key.id} className='hover:bg-[var(--bg-secondary)]/50 transition-colors'>
-                                        <td className='px-6 py-4 whitespace-nowrap text-sm text-[var(--text-primary)] uppercase'>
+                                        <td className='px-4 py-3 whitespace-nowrap text-sm text-[var(--text-primary)] uppercase'>
                                             {key.registrationnumber}
                                         </td>
-                                        <td className='px-6 py-4 whitespace-nowrap text-sm text-[var(--text-primary)]'>
+                                        <td className='px-4 py-3 whitespace-nowrap text-sm text-[var(--text-primary)]'>
                                             {key.firstname} {key.lastname}
                                         </td>
-                                        <td className='px-6 py-4 whitespace-nowrap'>
+                                        <td className='px-4 py-3 whitespace-nowrap'>
                                             <span
-                                                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                                className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
                                                     key.status === 'Avslutad'
                                                         ? 'bg-[var(--accent-green)]/10 text-[var(--accent-green)]'
                                                         : key.status === 'Under behandling'
@@ -237,10 +237,10 @@ export default function KeysPage() {
                                                 {key.status}
                                             </span>
                                         </td>
-                                        <td className='px-6 py-4 whitespace-nowrap text-sm text-[var(--text-primary)]'>
+                                        <td className='px-4 py-3 whitespace-nowrap text-sm text-[var(--text-primary)]'>
                                             {new Date(key.created_at).toLocaleDateString('sv-SE')}
                                         </td>
-                                        <td className='px-6 py-4 whitespace-nowrap text-sm text-[var(--text-primary)]'>
+                                        <td className='px-4 py-3 whitespace-nowrap text-sm text-[var(--text-primary)]'>
                                             <Link
                                                 to={`/keys/${key.id}`}
                                                 className='text-[var(--accent-blue)] hover:text-[var(--accent-blue)]/80 transition-colors'>
