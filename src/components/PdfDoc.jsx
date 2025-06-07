@@ -150,9 +150,9 @@ const ClaimDocument = ({ claim, signature, title, logo }) => (
             <View style={styles.bottomContainer}>
                 <Image style={styles.logo} src={`/images/${logo}.png`} />
                 <Text style={styles.confirmation}>
-                    Härmed intygas riktigheten av ovanstående uppgifter samt att försäkringen omfattar glasruteskada och att premien var
-                    betald vid skadetillfället. Godar försäkringsbolaget inte skadan som försäkringsgrundande är fordonsägaren alltid
-                    betalningsskyldig.
+                    {title.includes('Glas')
+                        ? 'Härmed intygas riktigheten av ovanstående uppgifter samt att försäkringen omfattar glasruteskada och att premien var betald vid skadetillfället. Godar försäkringsbolaget inte skadan som försäkringsgrundande är fordonsägaren alltid betalningsskyldig.'
+                        : 'Härmed intygas riktigheten av ovanstående uppgifter samt att försäkringen omfattar nyckelskada och att premien var betald vid skadetillfället. Godar försäkringsbolaget inte skadan som försäkringsgrundande är fordonsägaren alltid betalningsskyldig.'}
                 </Text>
             </View>
         </Page>
