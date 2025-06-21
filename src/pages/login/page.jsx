@@ -1,14 +1,13 @@
 import { useState } from 'react';
-import carImg from '../../images/car.png';
-import { LuArrowLeft, LuCheck } from 'react-icons/lu';
+import { LuArrowLeft, LuCheck, LuMail, LuLock, LuEye, LuEyeOff, LuCar } from 'react-icons/lu';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import Loading from '../../components/Loading';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
@@ -45,110 +44,134 @@ export default function LoginPage() {
     }
 
     return (
-        <div className='fixed inset-0 min-h-screen flex'>
-            {/* Left Section - Information */}
-            <div className='hidden lg:flex lg:w-1/2 bg-gradient-to-br from-gray-900 to-gray-800 text-white p-8 flex-col justify-between relative overflow-hidden'>
-                {/* Subtle pattern overlay */}
-                <div className='absolute inset-0 opacity-5'>
-                    <div
-                        className='absolute inset-0'
-                        style={{
-                            backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',
-                            backgroundSize: '40px 40px',
-                        }}
-                    />
+        <div className='absolute inset-0 min-h-screen max-h-[100dvh] flex items-center justify-center p-4 overflow-y-auto'>
+            <div className='w-full max-w-md my-4'>
+                {/* Header */}
+                <div className='text-center mb-6 sm:mb-8'>
+                    <div className='inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl sm:rounded-2xl mb-3 sm:mb-4 shadow-lg'>
+                        <LuCar className='w-6 h-6 sm:w-8 sm:h-8 text-white' />
+                    </div>
+                    <h1 className='text-xl sm:text-2xl font-bold text-gray-900 mb-1 sm:mb-2'>Bilskadeportalen</h1>
+                    <p className='text-sm sm:text-base text-gray-600'>Företagsadministratör</p>
                 </div>
 
-                <div className='relative z-10'>
-                    <h1 className='text-2xl font-bold mb-4 text-white/90'>Bilskadeportalen Företag</h1>
-                    <p className='text-base text-white/70 max-w-md'>
-                        Välkommen till Bilskadeportalen Företag - din plattform för enkel hantering av olika ärenden.
-                    </p>
-                    <a
-                        href='https://bilskadeportalen-customer.vercel.app'
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        className='inline-flex items-center gap-2 mt-4 text-white/80 hover:text-white transition-colors group'>
-                        <LuArrowLeft className='w-4 h-4 group-hover:translate-x-1 transition-transform' />
-                        <span className='text-sm'>Gå till kundformuläret</span>
-                    </a>
-                </div>
-                <div className='space-y-4 relative z-10'>
-                    <div className='flex items-center gap-3'>
-                        <div className='w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10'>
-                            <LuCheck className='w-5 h-5 text-white/70' />
-                        </div>
-                        <div>
-                            <h3 className='text-sm font-medium text-white/90'>Enkel hantering</h3>
-                            <p className='text-xs text-white/60'>Hantera alla dina ärenden på ett ställe</p>
-                        </div>
+                {/* Login Card */}
+                <div className='bg-white rounded-xl sm:rounded-2xl shadow-xl border border-gray-100 p-6 sm:p-8'>
+                    <div className='mb-4 sm:mb-6'>
+                        <h2 className='text-lg sm:text-xl font-semibold text-gray-900 mb-1 sm:mb-2'>Välkommen tillbaka</h2>
+                        <p className='text-xs sm:text-sm text-gray-600'>Logga in på ditt konto för att fortsätta</p>
                     </div>
-                    <div className='flex items-center gap-3'>
-                        <div className='w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10'>
-                            <LuCheck className='w-5 h-5 text-white/70' />
-                        </div>
-                        <div>
-                            <h3 className='text-sm font-medium text-white/90'>Snabb service</h3>
-                            <p className='text-xs text-white/60'>Effektiv hantering av dina ärenden</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            {/* Right Section - Login Form */}
-            <div className='w-full lg:w-1/2 flex items-center justify-center p-4 lg:p-6 relative'>
-                {/* Background Image with Overlay */}
-                <div className='absolute inset-0 z-0'>
-                    <img src={carImg} alt='Car background' className='w-full h-full object-cover' />
-                    <div className='absolute inset-0 bg-black/50' />
-                </div>
-                <h1 className='lg:hidden text-xl font-bold mb-4 text-white/90 absolute left-[50%] -translate-x-1/2 top-8 text-center'>
-                    Bilskadeportalen Företag
-                </h1>
-                {/* Glass Effect Form */}
-                <div className='w-full max-w-md z-10'>
-                    <div className='bg-white/10 backdrop-blur-xl rounded-xl px-4 lg:px-8 py-12 lg:py-12 border border-white/20 shadow-xl'>
-                        <h2 className='text-xl font-bold text-white mb-6 text-center'>Logga in</h2>
-                        <form onSubmit={handleLogin} className='space-y-4'>
-                            <div>
-                                <label htmlFor='email' className='block text-xs font-medium text-white/90 mb-1.5'>
-                                    E-post
-                                </label>
+                    <form onSubmit={handleLogin} className='space-y-4 sm:space-y-5'>
+                        <div>
+                            <label htmlFor='email' className='block text-sm font-medium text-gray-700 mb-1.5 sm:mb-2'>
+                                E-postadress
+                            </label>
+                            <div className='relative'>
+                                <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
+                                    <LuMail className='h-4 w-4 sm:h-5 sm:w-5 text-gray-400' />
+                                </div>
                                 <input
                                     id='email'
                                     type='email'
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className='w-full px-3 py-1.5 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-transparent text-sm'
+                                    className='text-black block w-full pl-9 sm:pl-10 pr-3 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-base'
                                     placeholder='din@email.se'
                                 />
                             </div>
-                            <div>
-                                <label htmlFor='password' className='block text-xs font-medium text-white/90 mb-1.5'>
-                                    Lösenord
-                                </label>
+                        </div>
+
+                        <div>
+                            <label htmlFor='password' className='block text-sm font-medium text-gray-700 mb-1.5 sm:mb-2'>
+                                Lösenord
+                            </label>
+                            <div className='relative'>
+                                <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
+                                    <LuLock className='h-4 w-4 sm:h-5 sm:w-5 text-gray-400' />
+                                </div>
                                 <input
                                     id='password'
-                                    type='password'
+                                    type={showPassword ? 'text' : 'password'}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className='w-full px-3 py-1.5 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-transparent text-sm'
+                                    className='text-black block w-full pl-9 sm:pl-10 pr-10 sm:pr-12 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-base'
                                     placeholder='••••••••'
                                 />
+                                <button
+                                    type='button'
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className='cursor-pointer absolute inset-y-0 right-0 pr-3 flex items-center'>
+                                    {showPassword ? (
+                                        <LuEyeOff className='h-4 w-4 sm:h-5 sm:w-5 text-gray-400 hover:text-gray-600' />
+                                    ) : (
+                                        <LuEye className='h-4 w-4 sm:h-5 sm:w-5 text-gray-400 hover:text-gray-600' />
+                                    )}
+                                </button>
                             </div>
-                            {error && (
-                                <div className='text-[var(--accent-red)] text-xs bg-[var(--accent-red)]/10 p-3 rounded-lg text-center'>
-                                    {error}
+                        </div>
+
+                        {error && (
+                            <div className='bg-red-50 border border-red-200 rounded-lg p-3 sm:p-4'>
+                                <div className='flex'>
+                                    <div className='flex-shrink-0'>
+                                        <svg className='h-4 w-4 sm:h-5 sm:w-5 text-red-400' viewBox='0 0 20 20' fill='currentColor'>
+                                            <path
+                                                fillRule='evenodd'
+                                                d='M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z'
+                                                clipRule='evenodd'
+                                            />
+                                        </svg>
+                                    </div>
+                                    <div className='ml-2 sm:ml-3'>
+                                        <p className='text-xs sm:text-sm text-red-800'>{error}</p>
+                                    </div>
                                 </div>
+                            </div>
+                        )}
+
+                        <button
+                            type='submit'
+                            disabled={loading}
+                            className='cursor-pointer w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-2.5 sm:py-3 px-4 rounded-lg font-medium hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl text-base'>
+                            {loading ? (
+                                <div className='flex items-center justify-center'>
+                                    <svg
+                                        className='animate-spin -ml-1 mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 text-white'
+                                        xmlns='http://www.w3.org/2000/svg'
+                                        fill='none'
+                                        viewBox='0 0 24 24'>
+                                        <circle
+                                            className='opacity-25'
+                                            cx='12'
+                                            cy='12'
+                                            r='10'
+                                            stroke='currentColor'
+                                            strokeWidth='4'></circle>
+                                        <path
+                                            className='opacity-75'
+                                            fill='currentColor'
+                                            d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'></path>
+                                    </svg>
+                                    Loggar in...
+                                </div>
+                            ) : (
+                                'Logga in'
                             )}
-                            <button
-                                type='submit'
-                                disabled={loading}
-                                className='cursor-pointer w-full bg-[var(--accent-blue)] text-white py-1.5 px-4 rounded-lg text-sm font-medium hover:bg-[var(--accent-blue)]/90 focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:ring-offset-2 focus:ring-offset-[var(--bg-primary)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed'>
-                                {loading ? 'Loggar in...' : 'Logga in'}
-                            </button>
-                        </form>
-                    </div>
+                        </button>
+                    </form>
+                </div>
+
+                {/* Footer Link */}
+                <div className='text-center mt-4 sm:mt-6'>
+                    <a
+                        href='https://bilskadeportalen-customer.vercel.app'
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-gray-600 hover:text-blue-600 transition-colors'>
+                        <LuArrowLeft className='w-3 h-3 sm:w-4 sm:h-4' />
+                        Gå till kundformuläret
+                    </a>
                 </div>
             </div>
         </div>

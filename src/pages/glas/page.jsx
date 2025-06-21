@@ -130,128 +130,139 @@ export default function GlasPage() {
             </div>
 
             {/* Filters */}
-            <div className='bg-[var(--bg-primary)] rounded-xl p-4 shadow-sm border border-[var(--border-color)]'>
-                <div className='grid grid-cols-1 md:grid-cols-3 gap-3'>
+            <div className='bg-[var(--bg-primary)] rounded-xl p-6 shadow-sm border border-[var(--border-color)]'>
+                <div className='flex items-center justify-between mb-4'>
+                    <h2 className='text-lg font-semibold text-[var(--text-primary)]'>Filtrera glasskador</h2>
+                    <button
+                        onClick={handleClearFilters}
+                        className='text-sm text-[var(--accent-blue)] hover:text-[var(--accent-blue)]/80 font-medium transition-colors'>
+                        Rensa alla filter
+                    </button>
+                </div>
+
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4'>
                     <div>
-                        <label className='text-xs font-medium text-[var(--text-secondary)] block mb-1.5'>Status</label>
+                        <label className='text-sm font-medium text-[var(--text-secondary)] block mb-2'>Status</label>
                         <select
                             value={filters.status}
                             onChange={(e) => handleFilterChange('status', e.target.value)}
-                            className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]'>
-                            <option value=''>Alla</option>
+                            className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent transition-all'>
+                            <option value=''>Alla statusar</option>
                             <option value='Ej påbörjad'>Ej påbörjad</option>
                             <option value='Under behandling'>Under behandling</option>
                             <option value='Avslutad'>Avslutad</option>
                         </select>
                     </div>
+
                     <div>
-                        <label className='text-xs font-medium text-[var(--text-secondary)] block mb-1.5'>Registreringsnummer</label>
+                        <label className='text-sm font-medium text-[var(--text-secondary)] block mb-2'>Registreringsnummer</label>
                         <input
                             type='text'
                             value={filters.registrationNumber}
                             onChange={(e) => handleFilterChange('registrationNumber', e.target.value)}
                             placeholder='ABC123'
-                            className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]'
+                            className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent transition-all placeholder-[var(--text-secondary)]'
                         />
                     </div>
+
                     <div>
-                        <label className='text-xs font-medium text-[var(--text-secondary)] block mb-1.5'>Kund</label>
+                        <label className='text-sm font-medium text-[var(--text-secondary)] block mb-2'>Kund</label>
                         <input
                             type='text'
                             value={filters.customer}
                             onChange={(e) => handleFilterChange('customer', e.target.value)}
                             placeholder='Sök efter kund...'
-                            className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]'
+                            className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent transition-all placeholder-[var(--text-secondary)]'
                         />
                     </div>
+
                     <div>
-                        <label className='text-xs font-medium text-[var(--text-secondary)] block mb-1.5'>Från datum</label>
+                        <label className='text-sm font-medium text-[var(--text-secondary)] block mb-2'>Från datum</label>
                         <input
                             type='date'
                             value={filters.startDate}
                             onChange={(e) => handleFilterChange('startDate', e.target.value)}
-                            className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]'
+                            className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent transition-all'
                         />
                     </div>
+
                     <div>
-                        <label className='text-xs font-medium text-[var(--text-secondary)] block mb-1.5'>Till datum</label>
+                        <label className='text-sm font-medium text-[var(--text-secondary)] block mb-2'>Till datum</label>
                         <input
                             type='date'
                             value={filters.endDate}
                             onChange={(e) => handleFilterChange('endDate', e.target.value)}
-                            className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)]'
+                            className='w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-transparent transition-all'
                         />
-                    </div>
-                    <div className='flex items-end'>
-                        <button
-                            onClick={handleClearFilters}
-                            className='cursor-pointer w-full bg-[var(--bg-secondary)] text-[var(--text-primary)] py-1.5 px-4 rounded-lg text-sm font-medium border border-[var(--border-color)] hover:bg-[var(--bg-secondary)]/80 transition-colors'>
-                            Rensa filter
-                        </button>
                     </div>
                 </div>
             </div>
 
-            {/* Table */}
+            {/* Cards */}
             {filteredGlassDamage.length > 0 && (
-                <div className='bg-[var(--bg-primary)] rounded-xl shadow-sm border border-[var(--border-color)] overflow-hidden'>
-                    <div className='overflow-x-auto'>
-                        <table className='w-full'>
-                            <thead>
-                                <tr className='bg-[var(--bg-secondary)]'>
-                                    <th className='px-4 py-2 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
-                                        Registreringsnummer
-                                    </th>
-                                    <th className='px-4 py-2 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
-                                        Kund
-                                    </th>
-                                    <th className='px-4 py-2 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
-                                        Status
-                                    </th>
-                                    <th className='px-4 py-2 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
-                                        Datum
-                                    </th>
-                                    <th className='px-4 py-2 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider'>
-                                        Åtgärder
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody className='divide-y divide-[var(--border-color)]'>
-                                {filteredGlassDamage.map((claim) => (
-                                    <tr key={claim.id} className='hover:bg-[var(--bg-secondary)]/50 transition-colors'>
-                                        <td className='px-4 py-3 whitespace-nowrap text-sm text-[var(--text-primary)] uppercase'>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'>
+                    {filteredGlassDamage.map((claim) => {
+                        const getStatusColor = (status) => {
+                            switch (status) {
+                                case 'Avslutad':
+                                    return 'bg-[var(--accent-green)]/10 border-[var(--accent-green)]/20';
+                                case 'Under behandling':
+                                    return 'bg-[var(--accent-yellow)]/10 border-[var(--accent-yellow)]/20';
+                                default:
+                                    return 'bg-[var(--accent-red)]/10 border-[var(--accent-red)]/20';
+                            }
+                        };
+
+                        const getStatusTextColor = (status) => {
+                            switch (status) {
+                                case 'Avslutad':
+                                    return 'text-[var(--accent-green)]';
+                                case 'Under behandling':
+                                    return 'text-[var(--accent-yellow)]';
+                                default:
+                                    return 'text-[var(--accent-red)]';
+                            }
+                        };
+
+                        return (
+                            <Link
+                                key={claim.id}
+                                to={`/glas/${claim.id}`}
+                                className={`block p-4 rounded-xl border transition-all duration-200 hover:shadow-md hover:scale-[1.01] ${getStatusColor(
+                                    claim.status
+                                )}`}>
+                                <div className='space-y-3'>
+                                    <div className='flex items-center justify-between'>
+                                        <span className='text-base font-semibold text-[var(--text-primary)] uppercase tracking-wide'>
                                             {claim.registrationnumber}
-                                        </td>
-                                        <td className='px-4 py-3 whitespace-nowrap text-sm text-[var(--text-primary)]'>
-                                            {claim.firstname} {claim.lastname}
-                                        </td>
-                                        <td className='px-4 py-3 whitespace-nowrap'>
-                                            <span
-                                                className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
-                                                    claim.status === 'Avslutad'
-                                                        ? 'bg-[var(--accent-green)]/10 text-[var(--accent-green)]'
-                                                        : claim.status === 'Under behandling'
-                                                        ? 'bg-[var(--accent-yellow)]/10 text-[var(--accent-yellow)]'
-                                                        : 'bg-[var(--accent-red)]/10 text-[var(--accent-red)]'
-                                                }`}>
-                                                {claim.status}
-                                            </span>
-                                        </td>
-                                        <td className='px-4 py-3 whitespace-nowrap text-sm text-[var(--text-primary)]'>
-                                            {new Date(claim.created_at).toLocaleDateString('sv-SE')}
-                                        </td>
-                                        <td className='px-4 py-3 whitespace-nowrap text-sm text-[var(--text-primary)]'>
-                                            <Link
-                                                to={`/glas/${claim.id}`}
-                                                className='text-[var(--accent-blue)] hover:text-[var(--accent-blue)]/80 transition-colors'>
-                                                Visa detaljer
-                                            </Link>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                                        </span>
+                                        <span
+                                            className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusTextColor(
+                                                claim.status
+                                            )}`}>
+                                            {claim.status}
+                                        </span>
+                                    </div>
+
+                                    <div className='space-y-2'>
+                                        <div>
+                                            <p className='text-sm text-[var(--text-secondary)]'>Kund</p>
+                                            <p className='text-sm text-[var(--text-primary)] font-medium'>
+                                                {claim.firstname} {claim.lastname}
+                                            </p>
+                                        </div>
+
+                                        <div>
+                                            <p className='text-sm text-[var(--text-secondary)]'>Datum</p>
+                                            <p className='text-sm text-[var(--text-primary)]'>
+                                                {new Date(claim.created_at).toLocaleDateString('sv-SE')}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Link>
+                        );
+                    })}
                 </div>
             )}
 

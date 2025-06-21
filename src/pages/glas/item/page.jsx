@@ -250,7 +250,7 @@ export default function GlasDetails() {
 
                     {/* Images */}
                     <div className='bg-[var(--bg-primary)] rounded-2xl p-6 shadow-sm border border-[var(--border-color)]'>
-                        <h2 className='text-lg font-semibold text-[var(--text-primary)] mb-6'>Bilder</h2>
+                        <h2 className='text-base font-semibold text-[var(--text-primary)] mb-4'>Bilder</h2>
                         {images.length > 0 && (
                             <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                                 {images.map((image) => (
@@ -275,70 +275,72 @@ export default function GlasDetails() {
                 <div className='space-y-8'>
                     {/* Customer Information */}
                     <div className='bg-[var(--bg-primary)] rounded-2xl p-6 shadow-sm border border-[var(--border-color)]'>
-                        <h2 className='text-lg font-semibold text-[var(--text-primary)] mb-6'>Kundinformation</h2>
+                        <h2 className='text-base font-semibold text-[var(--text-primary)] mb-4'>Kundinformation</h2>
                         <div className='space-y-4'>
                             <div className='flex items-center gap-3 bg-[var(--bg-secondary)] p-4 rounded-lg'>
                                 <LuUser className='w-5 h-5 text-[var(--text-secondary)]' />
                                 <div>
-                                    <p className='text-[var(--text-primary)] font-medium'>
+                                    <p className='text-sm text-[var(--text-primary)] font-medium'>
                                         {claim.firstname} {claim.lastname}
                                     </p>
-                                    <p className='text-sm text-[var(--text-secondary)]'>{claim.personalnum}</p>
+                                    <p className='text-xs text-[var(--text-secondary)]'>{claim.personalnum}</p>
                                 </div>
                             </div>
                             <div className='flex items-center gap-3 bg-[var(--bg-secondary)] p-4 rounded-lg'>
                                 <LuPhone className='w-5 h-5 text-[var(--text-secondary)]' />
-                                <p className='text-[var(--text-primary)]'>{claim.phone}</p>
+                                <p className='text-sm text-[var(--text-primary)]'>{claim.phone}</p>
                             </div>
                             <div className='flex items-center gap-3 bg-[var(--bg-secondary)] p-4 rounded-lg'>
                                 <LuMail className='w-5 h-5 text-[var(--text-secondary)]' />
-                                <p className='text-[var(--text-primary)] break-all'>{claim.email}</p>
+                                <p className='text-sm text-[var(--text-primary)] break-all'>{claim.email}</p>
                             </div>
                         </div>
                     </div>
 
                     {/* Vehicle Information */}
                     <div className='bg-[var(--bg-primary)] rounded-2xl p-6 shadow-sm border border-[var(--border-color)]'>
-                        <h2 className='text-lg font-semibold text-[var(--text-primary)] mb-6'>Fordon</h2>
+                        <h2 className='text-base font-semibold text-[var(--text-primary)] mb-4'>Fordon</h2>
                         <div className='space-y-4'>
                             <div className='flex items-center gap-3 bg-[var(--bg-secondary)] p-4 rounded-lg'>
                                 <LuCar className='w-5 h-5 text-[var(--text-secondary)]' />
-                                <p className='text-[var(--text-primary)] uppercase'>{claim.registrationnumber}</p>
+                                <p className='text-sm text-[var(--text-primary)] uppercase'>{claim.registrationnumber}</p>
                             </div>
                             <div className='flex items-center gap-3 bg-[var(--bg-secondary)] p-4 rounded-lg'>
                                 <LuFileText className='w-5 h-5 text-[var(--text-secondary)]' />
-                                <p className='text-[var(--text-primary)]'>{claim.insurancecompany}</p>
+                                <p className='text-sm text-[var(--text-primary)]'>{claim.insurancecompany}</p>
                             </div>
                             <div className='flex items-center gap-3 bg-[var(--bg-secondary)] p-4 rounded-lg'>
                                 <LuCheck className='w-5 h-5 text-[var(--text-secondary)]' />
-                                <p className='text-[var(--text-primary)]'>Momspliktig: {claim.vat}</p>
+                                <p className='text-sm text-[var(--text-primary)]'>Momspliktig: {claim.vat}</p>
                             </div>
                         </div>
                     </div>
 
                     {/* Signature */}
                     <div className='bg-[var(--bg-primary)] rounded-2xl p-6 shadow-sm border border-[var(--border-color)]'>
-                        <h2 className='text-lg font-semibold text-[var(--text-primary)] mb-6'>Signatur</h2>
+                        <h2 className='text-base font-semibold text-[var(--text-primary)] mb-4'>Signatur</h2>
                         <div className='space-y-4'>
                             <div className='flex items-center gap-3 bg-[var(--bg-secondary)] p-4 rounded-lg'>
                                 <img src={signature} alt='Signature' className='object-contain h-[130px] w-full' />
                             </div>
                             <div className='flex items-center gap-3 bg-[var(--bg-secondary)] p-4 rounded-lg'>
                                 <LuSignature className='w-5 h-5 text-[var(--text-secondary)]' />
-                                <p className='text-[var(--text-primary)]'>{claim.signature}</p>
+                                <p className='text-sm text-[var(--text-primary)]'>{claim.signature}</p>
                             </div>
                         </div>
                     </div>
 
                     {/* Timestamps */}
                     <div className='bg-[var(--bg-primary)] rounded-2xl p-6 shadow-sm border border-[var(--border-color)]'>
-                        <h2 className='text-lg font-semibold text-[var(--text-primary)] mb-6'>Tidsstämplar</h2>
+                        <h2 className='text-base font-semibold text-[var(--text-primary)] mb-4'>Tidsstämplar</h2>
                         <div className='space-y-4'>
                             <div className='flex items-center gap-3 bg-[var(--bg-secondary)] p-4 rounded-lg'>
                                 <LuCalendar className='w-5 h-5 text-[var(--text-secondary)]' />
                                 <div>
-                                    <p className='text-sm text-[var(--text-secondary)]'>Skapad</p>
-                                    <p className='text-[var(--text-primary)]'>{new Date(claim.created_at).toLocaleDateString('sv-SE')}</p>
+                                    <p className='text-xs text-[var(--text-secondary)]'>Skapad</p>
+                                    <p className='text-sm text-[var(--text-primary)]'>
+                                        {new Date(claim.created_at).toLocaleDateString('sv-SE')}
+                                    </p>
                                 </div>
                             </div>
                         </div>
